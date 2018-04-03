@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<item code="001" url="/image/account/head/save" discription="上传头像"/>
+	<item code="002" url="/image/account/head/get" discription="获取头像"/>
+	<item code="003" url="/image/fun/save" discription="上传趣事图片"/>
+	<item code="004" url="/image/fun/get/original" discription="获取趣事原图"/>
+	<item code="005" url="/image/fun/get/thumbnail" discription="获取趣事缩略图"/>
+</root>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="
+     http://www.springframework.org/schema/beans 
+     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/task 
+     http://www.springframework.org/schema/task/spring-task.xsd">
+    
+    <bean id="scheduler"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="approvedFunPushTrigger" />
+				<ref bean="getQiuShiPengFuTrigger" />
+				<ref bean="getQiuShiBAIKETrigger" />
+				<ref bean="getXiaoHuaBaoXiaoTrigger" />
+				<ref bean="getXiaoHuaZhongHeTrigger" />
+				<ref bean="getTuCaoTrigger" />
+				<ref bean="getBaoManTrigger" />
+				<ref bean="getDuiBaiGaoXiaoTrigger" />
+				<ref bean="getDuiBaiNaoCanTrigger" />
+			</list>
+		</property>
+	</bean>
+	
+	<!--定义触发规律 -->
+	<!-- 审核通过趣事并推送(早上9点到晚上7点每隔半小时) -->
+	<bean id="approvedFunPushTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="approvedFunPushClass" />
+		<property name="cronExpression" value="0 0/30 9-19 * * ?" />
+	</bean>
+	
+	<!-- 糗事-捧腹网抓取 (每天9点30执行)-->
+	<bean id="getQiuShiPengFuTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="getQiuShiPengFuClass" />
+		<property name="cronExpression" value="0 30 9 * * ?" />
+	</bean>
+	
+	<!-- 糗事-糗事百科抓取 (每天12点30执行)-->
+	<bean id="getQiuShiBAIKETrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="getQiuShiBaiKeClass" />
+		<property name="cronExpression" value="0 30 12 * * ?" />
+	</bean>
+	
+	<!-- 笑话-爆笑男女-儿童-家庭-动物-社会-职场抓取 (每天10点30执行)-->
+	<bean id="getXiaoHuaBaoXiaoTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="getXiaoHuaBaoXiaoClass" />
+		<property name="cronExpression" value="0 30 10 * * ?" />
+	</bean>
+	
+	<!-- 笑话-冷笑话-校园-综合-短信笑话-夫妻-爆笑签名抓取 (每天15点30执行)-->
+	<bean id="getXiaoHuaZhongHeTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="getXiaoHuaZhongHeClass" />
+		<property name="cronExpression" value="0 30 15 * * ?" />
+	</bean>
+	
+	<!-- 吐槽抓取 (每天11点30执行)-->
+	<bean id="getTuCaoTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="getTuCaoClass" />
+		<property name="cronExpression" value="0 30 11 * * ?" />
+	</bean>
+	
+	<!-- 暴漫抓取 (每天13点30执行)-->
+	<bean id="getBaoManTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="getBaoManClass" />
+		<property name="cronExpression" value="0 30 13 * * ?" />
+	</bean>
+	
+	<!-- 对白-搞笑对话(每天14点30执行)-->
+	<bean id="getDuiBaiGaoXiaoTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="getDuiBaiGaoXiaoClass" />
+		<property name="cronExpression" value="0 30 14 * * ?" />
+	</bean>
+	
+	<!-- 对白-海量脑残对话 (每天11点执行)-->
+	<bean id="getDuiBaiNaoCanTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="getDuiBaiNaoCanClass" />
+		<property name="cronExpression" value="0 0 11 * * ?" />
+	</bean>
+	
+	<!-- 审核趣事 -->
+	<bean name="approvedFunPushClass" class="org.springframework.scheduling.quartz.JobDetailBean">
+	    <property name="jobClass" value="com.xiaoyu.fun.job.ApprovedFunPushJob" />
+	     <property name="jobDataAsMap">      
+            <map>
+               <entry key="busiFunService" value-ref="busiFunService"/>
+               <entry key="mqPushService" value-ref="mqPushService"/>
+            </map>      
+        </property>      
+	</bean>
+	
+	<!-- 糗事-捧腹网抓取 (每天9点30执行)-->
+	<bean name="getQiuShiPengFuClass" class="org.springframework.scheduling.quartz.JobDetailBean">
+	    <property name="jobClass" value="com.xiaoyu.fun.job.GetQiuShiPengFuJob" />
+	     <property name="jobDataAsMap">      
+            <map>
+               <entry key="busiFunService" value-ref="busiFunService"/>
+               <entry key="redisTemplate" value-ref="redisTemplate"/>
+            </map>      
+        </property>      
+	</bean>
+
+	<!-- 糗事-糗事百科抓取 (每天12点30执行)-->
+	<bean name="getQiuShiBaiKeClass" class="org.springframework.scheduling.quartz.JobDetailBean">
+	    <property name="jobClass" value="com.xiaoyu.fun.job.GetQiuShiBaiKeJob" />
+	     <property name="jobDataAsMap">      
+            <map>
+               <entry key="busiFunService" value-ref="busiFunService"/>
+               <entry key="redisTemplate" value-ref="redisTemplate"/>
+            </map>      
+        </property>      
+	</bean>
+	
+	<!-- 笑话-爆笑男女-儿童-家庭-动物-社会-职场抓取 (每天10点30执行)-->
+	<bean name="getXiaoHuaBaoXiaoClass" class="org.springframework.scheduling.quartz.JobDetailBean">
+	    <property name="jobClass" value="com.xiaoyu.fun.job.GetXiaoHuaBaoXiaoJob" />
+	     <property name="jobDataAsMap">      
+            <map>
+               <entry key="busiFunService" value-ref="busiFunService"/>
+               <entry key="redisTemplate" value-ref="redisTemplate"/>
+            </map>      
+        </property>      
+	</bean>
+	
+	<!-- 笑话-冷笑话-校园-综合-短信笑话-夫妻-爆笑签名抓取 (每天15点30执行)-->
+	<bean name="getXiaoHuaZhongHeClass" class="org.springframework.scheduling.quartz.JobDetailBean">
+	    <property name="jobClass" value="com.xiaoyu.fun.job.GetXiaoHuaZhongHeJob" />
+	     <property name="jobDataAsMap">      
+            <map>
+               <entry key="busiFunService" value-ref="busiFunService"/>
+               <entry key="redisTemplate" value-ref="redisTemplate"/>
+            </map>      
+        </property>      
+	</bean>
+	
+	<!-- 吐槽抓取 (每天11点30执行)-->
+	<bean name="getTuCaoClass" class="org.springframework.scheduling.quartz.JobDetailBean">
+	    <property name="jobClass" value="com.xiaoyu.fun.job.GetTuCaoJob" />
+	     <property name="jobDataAsMap">      
+            <map>
+               <entry key="busiFunService" value-ref="busiFunService"/>
+               <entry key="redisTemplate" value-ref="redisTemplate"/>
+            </map>      
+        </property>      
+	</bean>
+	
+	<!-- 暴漫抓取 (每天13点30执行)-->
+	<bean name="getBaoManClass" class="org.springframework.scheduling.quartz.JobDetailBean">
+	    <property name="jobClass" value="com.xiaoyu.fun.job.GetBaoManJob" />
+	     <property name="jobDataAsMap">      
+            <map>
+               <entry key="busiFunService" value-ref="busiFunService"/>
+               <entry key="redisTemplate" value-ref="redisTemplate"/>
+            </map>      
+        </property>      
+	</bean>
+	
+	<!-- 对白-搞笑对话(每天14点30执行)-->
+	<bean name="getDuiBaiGaoXiaoClass" class="org.springframework.scheduling.quartz.JobDetailBean">
+	    <property name="jobClass" value="com.xiaoyu.fun.job.GetDuiBaiGaoXiaoJob" />
+	     <property name="jobDataAsMap">      
+            <map>
+               <entry key="busiFunService" value-ref="busiFunService"/>
+               <entry key="redisTemplate" value-ref="redisTemplate"/>
+            </map>      
+        </property>      
+	</bean>
+	
+	<!-- 对白-海量脑残对话 (每天11点执行)-->
+	<bean name="getDuiBaiNaoCanClass" class="org.springframework.scheduling.quartz.JobDetailBean">
+	    <property name="jobClass" value="com.xiaoyu.fun.job.GetDuiBaiNaoCanJob" />
+	     <property name="jobDataAsMap">      
+            <map>
+               <entry key="busiFunService" value-ref="busiFunService"/>
+               <entry key="redisTemplate" value-ref="redisTemplate"/>
+            </map>      
+        </property>      
+	</bean>
+</beans>

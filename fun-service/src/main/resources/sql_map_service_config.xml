@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<setting name="cacheEnabled" value="false" />
+		<setting name="localCacheScope" value="STATEMENT" />
+	</settings>
+
+	<typeAliases>
+		<typeAlias type="com.xiaoyu.fun.entity.BusiPushinfo" alias="BusiPushinfo"/>
+		<typeAlias type="com.xiaoyu.fun.entity.BusiAnswerquestion" alias="BusiAnswerquestion"/>
+		<typeAlias type="com.xiaoyu.fun.entity.BusiComment" alias="BusiComment"/>
+		<typeAlias type="com.xiaoyu.fun.entity.BusiCollect" alias="BusiCollect"/>
+		<typeAlias type="com.xiaoyu.fun.entity.BusiFeedback" alias="BusiFeedback"/>
+		<typeAlias type="com.xiaoyu.fun.entity.BusiFun" alias="BusiFun"/>
+		<typeAlias type="com.xiaoyu.fun.entity.BusiQuestion" alias="BusiQuestion"/>
+		<typeAlias type="com.xiaoyu.fun.entity.BusiReport" alias="BusiReport"/>
+		<typeAlias type="com.xiaoyu.fun.entity.BusiUser" alias="BusiUser"/>
+		<typeAlias type="com.xiaoyu.fun.entity.BusiVersion" alias="BusiVersion"/>
+		<typeAlias type="com.xiaoyu.fun.entity.CoreAccount" alias="CoreAccount"/>
+		<typeAlias type="com.xiaoyu.fun.entity.CoreAttachment" alias="CoreAttachment"/>
+		<typeAlias type="com.xiaoyu.fun.entity.CoreDict" alias="CoreDict"/>
+		<typeAlias type="com.xiaoyu.fun.entity.CoreFunction" alias="CoreFunction"/>
+		<typeAlias type="com.xiaoyu.fun.entity.CoreInfo" alias="CoreInfo"/>
+		<typeAlias type="com.xiaoyu.fun.entity.CoreLink" alias="CoreLink"/>
+		<typeAlias type="com.xiaoyu.fun.entity.CoreLlog" alias="CoreLlog"/>
+		<typeAlias type="com.xiaoyu.fun.entity.CoreRole" alias="CoreRole"/>
+		<typeAlias type="com.xiaoyu.fun.entity.CoreSuggest" alias="CoreSuggest"/>
+		<typeAlias type="com.xiaoyu.fun.entity.CoreTlog" alias="CoreTlog"/>
+	</typeAliases>
+
+	<plugins>
+		<plugin interceptor="com.xiaoyu.fun.mybatis.plugin.SelectCountSqlInterceptor" />
+		<plugin interceptor="com.xiaoyu.fun.mybatis.plugin.OffsetLimitInterceptor">
+			<property name="dialectClass" value="com.xiaoyu.fun.mybatis.dialect.MySQLDialect" />
+		</plugin>
+	</plugins>
+
+	<mappers>
+		<mapper resource="mapper/common.xml" />
+		<mapper resource="mapper/BusiPushinfoMapper.xml"/>
+		<mapper resource="mapper/BusiAnswerquestionMapper.xml"/>
+		<mapper resource="mapper/BusiCommentMapper.xml"/>
+		<mapper resource="mapper/BusiCollectMapper.xml"/>
+		<mapper resource="mapper/BusiFeedbackMapper.xml"/>
+		<mapper resource="mapper/BusiFunMapper.xml"/>
+		<mapper resource="mapper/BusiQuestionMapper.xml"/>
+		<mapper resource="mapper/BusiReportMapper.xml"/>
+		<mapper resource="mapper/BusiUserMapper.xml"/>
+		<mapper resource="mapper/BusiVersionMapper.xml"/>
+		<mapper resource="mapper/CoreAccountMapper.xml"/>
+		<mapper resource="mapper/CoreAttachmentMapper.xml"/>
+		<mapper resource="mapper/CoreDictMapper.xml"/>
+		<mapper resource="mapper/CoreFunctionMapper.xml"/>
+		<mapper resource="mapper/CoreInfoMapper.xml"/>
+		<mapper resource="mapper/CoreLinkMapper.xml"/>
+		<mapper resource="mapper/CoreLlogMapper.xml"/>
+		<mapper resource="mapper/CoreRoleMapper.xml"/>
+		<mapper resource="mapper/CoreSuggestMapper.xml"/>
+		<mapper resource="mapper/CoreTlogMapper.xml"/>
+	</mappers>
+</configuration>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<caches>
+	<cache table="busi_question" mapper_sql_id="selAllQuestion" vo_name="com.xiaoyu.fun.entity.BusiQuestion" vo_key="bsqsnUuid">
+	</cache>
+</caches>
